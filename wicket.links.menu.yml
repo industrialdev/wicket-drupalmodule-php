@@ -1,0 +1,12 @@
+wicket.admin_config_wicket:
+  title: Wicket
+  route_name: wicket.settings
+  parent: system.admin_config
+  description: 'Manage wicket, son.'
+  weight: 5
+
+wicket.settings:
+  title: 'Wicket Configuration'
+  parent: wicket.admin_config_wicket
+  description: 'Configure Wicket API settings, etc.'
+  route_name: wicket.settings

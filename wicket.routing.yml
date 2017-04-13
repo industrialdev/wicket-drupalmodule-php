@@ -1,0 +1,7 @@
+wicket.settings:
+  path: '/admin/config/wicket/settings'
+  defaults:
+    _form: '\Drupal\wicket\Form\wicketSettingsForm'
+    _title: 'Wicket Admin'
+  requirements:
+    _permission: 'administer site configuration'

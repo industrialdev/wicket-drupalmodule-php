@@ -1,0 +1,15 @@
+wicket_onboarding.onboarding:
+  path: '/member/onboarding'
+  defaults:
+    _controller: '\Drupal\wicket_onboarding\Controller\WicketOnboardingController::onboarding'
+    _title: 'Member Onboarding'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+wicket_onboarding.settings:
+  path: '/admin/config/wicket-onboarding/settings'
+  defaults:
+    _form: '\Drupal\wicket_onboarding\Form\wicketOnboardingSettingsForm'
+    _title: 'Wicket Onboarding Admin'
+  requirements:
+    _permission: 'administer site configuration'

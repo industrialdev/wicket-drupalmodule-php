@@ -1,0 +1,40 @@
+<?php
+
+use Drupal\wicket\Form\wicketSettingsForm;
+
+/**
+ * Loads the PHP SDK
+ */
+function wicket_api_client() {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  static $client;
+
+  if ($client === NULL) {
+    try {
+      // Wicket SDK being included as part of the main composer.json
+      // likely using the "merge-plugin" approach
+      if (!class_exists('\Wicket\Client')) {
+        // No library available!
+        return FALSE;
+      }
+
+      $config = \Drupal::config('wicket.settings');
+
+      $app_key = $config->get(wicketSettingsForm::FORM_ID . '_app_key');
+      $api_endpoint = $config->get(wicketSettingsForm::FORM_ID . '_api_endpoint');
+      $secret_key = $config->get(wicketSettingsForm::FORM_ID . '_secret_key');
+      $person_id = $config->get(wicketSettingsForm::FORM_ID . '_person_id');
+
+      $client = new \Wicket\Client($app_key, $secret_key, $api_endpoint);
+      $client->authorize($person_id);
+      // test the endpoint before returning the client to ensure it's up
+      $client->get($api_endpoint);
+      $client->locale = $language;
+    }
+    catch (Exception $e) {
+      // don't return the $client unless the API is up.
+      return false;
+    }
+  }
+  return $client;
+}

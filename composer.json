@@ -1,0 +1,14 @@
+{
+  "name": "industrialdev/wicket-sdk-php",
+  "description": "PHP SDK for Wicket",
+  "type": "drupal-module",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/industrialdev/wicket-sdk-php.git"
+    }
+  ],
+  "require": {
+    "industrialdev/wicket-sdk-php": "dev-master"
+  }
+}
