@@ -1,3 +1,4 @@
+# provides links on the admin -> config page
 wicket.admin_config_wicket:
   title: Wicket
   route_name: wicket.settings

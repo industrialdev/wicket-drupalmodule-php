@@ -1,0 +1,5 @@
+# wicket_onboarding.settings:
+#   title: 'Wicket Onboarding'
+#   parent: wicket.admin_config_wicket
+#   description: 'Configure Wicket Onboarding settings for the React order workflow'
+#   route_name: wicket_onboarding.settings

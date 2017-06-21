@@ -1,0 +1,8 @@
+name: Wicket Create Account
+type: module
+description: wicket.io module responsible for providing a page/route/form to sign up to wicket as a person
+package: Wicket
+core: 8.x
+dependencies:
+  - cas:cas
+  - wicket:wicket
