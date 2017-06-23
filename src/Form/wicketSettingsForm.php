@@ -62,6 +62,13 @@ class wicketSettingsForm extends ConfigFormBase {
       '#description' => t('Person ID from wicket'),
       '#required' => TRUE,
     );
+    $form[$this->getFormId() . '_parent_org'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Parent Org'),
+      '#default_value' => $config->get($this->getFormId() . '_parent_org', ''),
+      '#description' => t('Top level organization used for creating new people on the create account form. This is the "alternate name" found in Wicket'),
+      '#required' => TRUE,
+    );
 
     return parent::buildForm($form, $form_state);
   }
@@ -77,6 +84,7 @@ class wicketSettingsForm extends ConfigFormBase {
       ->set($this->getFormId() . '_app_key', $form_state->getValue($this->getFormId() . '_app_key'))
       ->set($this->getFormId() . '_secret_key', $form_state->getValue($this->getFormId() . '_secret_key'))
       ->set($this->getFormId() . '_person_id', $form_state->getValue($this->getFormId() . '_person_id'))
+      ->set($this->getFormId() . '_parent_org', $form_state->getValue($this->getFormId() . '_parent_org'))
       ->save();
 
     parent::submitForm($form, $form_state);

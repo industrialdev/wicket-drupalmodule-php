@@ -4,6 +4,7 @@ namespace Drupal\wicket_create_account\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\wicket\Form\wicketSettingsForm;
 
 /**
  * Provide a wicket person create account form.
@@ -100,8 +101,11 @@ class wicketCreateAccountForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $client = wicket_api_client();
-    $org = $client->organizations->all()->first(function ($item) {
-      return $item->alternate_name == 'AOM';
+    $config = \Drupal::config('wicket.settings');
+    $parent_org = $config->get(wicketSettingsForm::FORM_ID . '_parent_org') != '' ? $config->get(wicketSettingsForm::FORM_ID . '_parent_org') : null;
+
+    $org = $client->organizations->all()->first(function ($item) use ($parent_org) {
+      return $item->alternate_name == $parent_org;
     });
 
     $user = [
