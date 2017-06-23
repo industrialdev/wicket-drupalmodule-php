@@ -107,8 +107,10 @@ class wicketCreateAccountForm extends ConfigFormBase {
     $user = [
       'given_name'            => $form_state->getValue($this->getFormId() . '_given_name'),
       'family_name'           => $form_state->getValue($this->getFormId() . '_family_name'),
-      'password'              => $form_state->getValue($this->getFormId() . '_password'),
-      'password_confirmation' => $form_state->getValue($this->getFormId() . '_password_confirmation'),
+      'user' => [
+        'password'              => $form_state->getValue($this->getFormId() . '_password'),
+        'password_confirmation' => $form_state->getValue($this->getFormId() . '_password_confirmation'),
+      ]
     ];
 
     $person = new \Wicket\Entities\People($user);
