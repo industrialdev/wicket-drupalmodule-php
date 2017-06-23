@@ -92,8 +92,12 @@ class wicketCreateAccountForm extends ConfigFormBase {
       '#default_value' => $config->get($this->getFormId() . '_password_confirmation', ''),
       '#required' => TRUE,
     );
+    $form['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => $this->t('Submit'),
+    );
 
-    return parent::buildForm($form, $form_state);
+    return $form;
   }
 
   /**
