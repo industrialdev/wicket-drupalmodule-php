@@ -158,6 +158,7 @@ class wicketCreateAccountForm extends ConfigFormBase {
     }else {
       // redirect instead of staying on page
       header('Location: /verify-account');
+      die;
       // parent::submitForm($form, $form_state);
     }
 

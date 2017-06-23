@@ -31,7 +31,7 @@ function wicket_api_client() {
       $client->get($api_endpoint);
       $client->locale = $language;
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       // don't return the $client unless the API is up.
       return false;
     }
