@@ -50,7 +50,7 @@ class LoginSubscriber implements EventSubscriberInterface {
     $uid = $event->getAccount()->id();
     $userData->set('wicket', $uid, 'personUuid', $personUuid);
 
-    drupal_set_message('Event search_api.task.addIndex thrown by LoginSubscriber in module wicket.', 'status', TRUE);
+    // drupal_set_message('Event search_api.task.addIndex thrown by LoginSubscriber in module wicket.', 'status', TRUE);
   }
 
 }
