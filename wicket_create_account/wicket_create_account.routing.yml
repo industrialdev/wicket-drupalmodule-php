@@ -5,11 +5,3 @@ wicket_create_account.create_account_page:
     _title: 'Create Account'
   requirements:
       _permission: 'access content'
-
-# wicket_onboarding.settings:
-#   path: '/admin/config/wicket-onboarding/settings'
-#   defaults:
-#     _form: '\Drupal\wicket_onboarding\Form\wicketOnboardingSettingsForm'
-#     _title: 'Wicket Onboarding Admin'
-#   requirements:
-#     _permission: 'administer site configuration'

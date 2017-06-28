@@ -1,5 +1,0 @@
-services:
-  wicket.login_subscriber:
-    class: Drupal\wicket\EventSubscriber\LoginSubscriber
-    tags:
-      - { name: event_subscriber }

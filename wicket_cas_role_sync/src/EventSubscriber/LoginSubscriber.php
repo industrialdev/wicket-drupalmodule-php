@@ -2,11 +2,11 @@
 
 /**
  * @file
- * Contains \Drupal\wicket\EventSubscriber\LoginSubscriber.
+ * Contains \Drupal\wicket_cas_role_sync\EventSubscriber\LoginSubscriber.
  * https://drupalize.me/blog/201502/responding-events-drupal-8
  */
 
-namespace Drupal\wicket\EventSubscriber;
+namespace Drupal\wicket_cas_role_sync\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * Class LoginSubscriber.
  *
- * @package Drupal\wicket
+ * @package Drupal\wicket_cas_role_sync
  */
 class LoginSubscriber implements EventSubscriberInterface {
 

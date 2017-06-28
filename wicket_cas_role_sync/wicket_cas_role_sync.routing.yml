@@ -1,0 +1,7 @@
+wicket_cas_role_sync.settings:
+  path: '/admin/config/wicket-cas-role-sync/settings'
+  defaults:
+    _form: '\Drupal\wicket_cas_role_sync\Form\wicketCasRoleSyncSettingsForm'
+    _title: 'Wicket CAS Role Sync'
+  requirements:
+    _permission: 'administer site configuration'

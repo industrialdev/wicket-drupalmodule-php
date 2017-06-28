@@ -1,0 +1,5 @@
+services:
+  wicket_cas_role_sync.login_subscriber:
+    class: Drupal\wicket_cas_role_sync\EventSubscriber\LoginSubscriber
+    tags:
+      - { name: event_subscriber }

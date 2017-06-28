@@ -1,0 +1,5 @@
+wicket_cas_role_sync.settings:
+  title: 'Wicket CAS Role Sync'
+  parent: wicket.admin_config_wicket
+  description: 'Whitelist Wicket roles for syncing on user login with CAS'
+  route_name: wicket_cas_role_sync.settings
