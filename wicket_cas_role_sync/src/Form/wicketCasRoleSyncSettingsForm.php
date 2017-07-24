@@ -34,27 +34,29 @@ class wicketCasRoleSyncSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('wicket_cas_role_sync.settings');
 
+    // get all roles from Wicket to build the list
     $client = wicket_api_client();
-    $roles = $client->roles;
+    $roles = $client->roles->all();
+    $role_options = [];
+    if ($roles) {
+      foreach ($roles as $role) {
+        $role_options[$role->uuid] = $role->name;
+      }
+    }
 
-
-    kint($roles);
-
-
-    // $form[$this->getFormId() . '_embed_url'] = array(
-    //   '#type' => 'textfield',
-    //   '#title' => t('Onboarding embed url'),
-    //   '#default_value' => $config->get($this->getFormId() . '_embed_url', ''),
-    //   '#description' => t('URL used to embed the onboarding javascript application.'),
-    //   '#required' => TRUE,
-    // );
-    // $form[$this->getFormId() . '_order_completed_path'] = array(
-    //   '#type' => 'textfield',
-    //   '#title' => t('Onboarding order completed redirect path'),
-    //   '#default_value' => $config->get($this->getFormId() . '_order_completed_path', ''),
-    //   '#description' => t('Path to redirect member to after completing order.'),
-    //   '#required' => TRUE,
-    // );
+    $form[$this->getFormId() . '_sync_all_roles'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Sync all roles'),
+      '#default_value' => $config->get($this->getFormId() . '_sync_all_roles', ''),
+      '#description' => t('If checked, all roles on each user logging in will be considered for synchronization into Drupal.'),
+    );
+    $form[$this->getFormId() . '_whitelisted_roles'] = array(
+      '#type' => 'checkboxes',
+      '#options' => $role_options,
+      '#title' => t('Whitelisted Roles'),
+      '#default_value' => $config->get($this->getFormId() . '_whitelisted_roles', ''),
+      '#description' => t('These are all the roles in Wicket. Choose which to whitelist (which ones will be considered for synchronization when users log in to Drupal)'),
+    );
 
     return parent::buildForm($form, $form_state);
   }
@@ -66,8 +68,8 @@ class wicketCasRoleSyncSettingsForm extends ConfigFormBase {
     // Retrieve the configuration
     $this->config('wicket_cas_role_sync.settings')
       // Set the submitted configuration setting
-      ->set($this->getFormId() . '_embed_url', $form_state->getValue($this->getFormId() . '_embed_url'))
-      ->set($this->getFormId() . '_order_completed_path', $form_state->getValue($this->getFormId() . '_order_completed_path'))
+      ->set($this->getFormId() . '_sync_all_roles', $form_state->getValue($this->getFormId() . '_sync_all_roles'))
+      ->set($this->getFormId() . '_whitelisted_roles', $form_state->getValue($this->getFormId() . '_whitelisted_roles'))
       ->save();
 
     parent::submitForm($form, $form_state);
