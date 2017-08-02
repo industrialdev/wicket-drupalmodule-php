@@ -40,7 +40,18 @@ class wicketCasRoleSyncSettingsForm extends ConfigFormBase {
     $role_options = [];
     if ($roles) {
       foreach ($roles as $role) {
-        $role_options[$role->uuid] = $role->name;
+        $role = $client->roles->fetch($role->id);
+        $role_org_id = $role->relationship('resource')[0]->id ?? '';
+        $role_id = str_replace('-','_',$role->id);
+        // if this role has an associated ORG, get its name and add as a suffix
+        if ($role_org_id) {
+          $client = wicket_api_client();
+          $org = $client->organizations->fetch($role_org_id);
+          // convert dashes to underscores for Drupal's role machine name. It doesn't accept dashes
+          $role_options[$role_id] = $org->legal_name.' - '.$role->name;
+        }else {
+          $role_options[$role_id] = $role->name;
+        }
       }
     }
 
@@ -57,6 +68,7 @@ class wicketCasRoleSyncSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get($this->getFormId() . '_whitelisted_roles', ''),
       '#description' => t('These are all the roles in Wicket. Choose which to whitelist (which ones will be considered for synchronization when users log in to Drupal)'),
     );
+    $form['#attached']['library'][] = 'wicket_cas_role_sync/wicket_cas_role_sync';
 
     return parent::buildForm($form, $form_state);
   }

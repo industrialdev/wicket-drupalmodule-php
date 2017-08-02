@@ -1,6 +1,6 @@
 wicket_cas_role_sync:
   js:
-    js/bootstrap.js: {}
+    js/role_sync_admin.js: {}
   dependencies:
     - core/jquery
     - core/drupalSettings

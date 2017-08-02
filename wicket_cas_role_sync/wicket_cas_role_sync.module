@@ -1,0 +1,22 @@
+<?php
+
+use Drupal\wicket_cas_role_sync\Form\wicketCasRoleSyncSettingsForm;
+
+/**
+ * Retrieve the whitelisted role settings from the form
+ */
+function get_whitelisted_wicket_roles(){
+  $config = \Drupal::config('wicket_cas_role_sync.settings');
+  $sync_all_roles = $config->get(wicketCasRoleSyncSettingsForm::FORM_ID . '_sync_all_roles');
+  $whitelisted_roles = $config->get(wicketCasRoleSyncSettingsForm::FORM_ID . '_whitelisted_roles');
+  $roles_to_sync = [];
+  if (!$sync_all_roles) {
+    // if sync all roles isn't checked, build the list of individual roles to sync
+    foreach ($whitelisted_roles as $role_id) {
+      if ($role_id) {
+        $roles_to_sync[] = $role_id;
+      }
+    }
+  }
+  return $roles_to_sync;
+}

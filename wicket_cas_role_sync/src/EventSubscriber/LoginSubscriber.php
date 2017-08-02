@@ -41,16 +41,49 @@ class LoginSubscriber implements EventSubscriberInterface {
    * @param GetResponseEvent $event
    */
   public function cas_pre_login_event($event) {
+    // get the person UUID
     $property_bag = $event->getCasPropertyBag();
     $cas_attributes = $property_bag->getAttributes();
     $personUuid = $cas_attributes['personUuid'][0];
 
     // https://www.webomelette.com/storing-user-data-such-preferences-drupal-8-using-userdata-service
+    // save the personUuid to their Drupal account
     $userData = \Drupal::service('user.data');
     $uid = $event->getAccount()->id();
     $userData->set('wicket', $uid, 'personUuid', $personUuid);
 
-    // drupal_set_message('Event search_api.task.addIndex thrown by LoginSubscriber in module wicket.', 'status', TRUE);
+    // get current user roles from Wicket
+    $roles = wicket_get_person_roles_by_id($personUuid);
+
+    // sync roles for the user in Drupal
+    if ($roles) {
+      $user = \Drupal\user\Entity\User::load($uid);
+      // first remove all user roles before we sync
+      foreach ($user->getRoles() as $role) {
+        $user->removeRole($role);
+      }
+      // get all whitelisted roles
+      $whitelisted_roles = get_whitelisted_wicket_roles();
+
+      foreach ($roles as $uuid => $role) {
+        // if we need to skip certain roles, do it
+        if (!empty($whitelisted_roles) && !in_array($uuid, $whitelisted_roles)) {
+          continue;
+        }
+        // first check to see if this role exists in Drupal
+        $role_exists = \Drupal\user\Entity\Role::load($uuid);
+        // if not, create it
+        if (!$role_exists) {
+          $new_role = array('id' => $uuid, 'label' => $role);
+          $new_role = \Drupal\user\Entity\Role::create($new_role);
+          $new_role->save();
+        }
+        if (!$user->hasRole($uuid)) {
+          $user->addRole($uuid);
+          $user->save();
+        }
+      }
+    }
   }
 
 }

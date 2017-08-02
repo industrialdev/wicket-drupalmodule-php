@@ -38,3 +38,37 @@ function wicket_api_client() {
   }
   return $client;
 }
+
+function wicket_get_person_by_id($uuid){
+  static $person;
+
+  if ($uuid) {
+    $client = wicket_api_client();
+    $person = $client->people->fetch($uuid);
+    return $person;
+  }
+}
+
+function wicket_get_person_roles_by_id($uuid){
+  static $person;
+  $person = wicket_get_person_by_id($uuid);
+  $variants = $person->included()->filter(function ($item) {
+    return isset($item['type']) && $item['type'] == 'roles';
+  });
+
+  $roles = [];
+  foreach ($variants->all() as $role) {
+    // if this role has an associated ORG, get its name and add as a suffix
+    $role_id = str_replace('-','_',$role['id']);
+    if (isset($role['relationships']['resource']['data']['id'])) {
+      $org_id = $role['relationships']['resource']['data']['id'];
+      $client = wicket_api_client();
+      $org = $client->organizations->fetch($org_id);
+      // convert dashes to underscores for Drupal's role machine name. It doesn't accept dashes
+      $roles[$role_id] = $org->legal_name.' - '.$role['attributes']['name'];
+    }else {
+      $roles[$role_id] = $role['attributes']['name'];
+    }
+  }
+  return $roles;
+}
