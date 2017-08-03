@@ -29,7 +29,6 @@ class WicketOnboardingController extends ControllerBase {
     $config = \Drupal::config('wicket_onboarding.settings');
     $onboarding_embed_url = $config->get(wicketOnboardingSettingsForm::FORM_ID . '_embed_url');
 
-
     if (!$client) {
       drupal_set_message(t('Error initializing wicket api client'), 'error');
       return [];
@@ -49,11 +48,12 @@ class WicketOnboardingController extends ControllerBase {
 
     $order_completed_path = $config->get(wicketOnboardingSettingsForm::FORM_ID . '_order_completed_path');
     $output = ["#markup" => '<div id="wicket-onboarding-content-root" class="wicket"></div>'];
+    // https://medium.com/@ToddZebert/loading-and-using-javascript-in-drupal-8-f6643d19ae0f
     $output['#attached']['library'][] = 'wicket_onboarding/wicket_onboarding';
     $output['#attached']['html_head'][] = [
       [
         '#type' => 'html_tag',
-        // The HTML tag to add, in this case a  tag.
+        // The HTML tag to add, in this case a tag.
         '#tag' => 'script',
         // The value of the HTML tag, here we want to end up with
         '#value' => '',
@@ -76,7 +76,6 @@ class WicketOnboardingController extends ControllerBase {
     ];
 
     return $output;
-
   }
 
 }
