@@ -40,6 +40,12 @@ class wicketCasRoleSyncSettingsForm extends ConfigFormBase {
     $role_options = [];
     if ($roles) {
       foreach ($roles as $role) {
+        // skip the Wicket "administrator" role from being shown as an option.
+        // this gets too confusing when in Drupal considering its built in "Administrator" role.
+        // Hence why usually a new role in Wicket is created called "Drupal Admin" instead
+        if ($role->name == 'administrator') {
+          continue;
+        }
         $role = $client->roles->fetch($role->id);
         $role_org_id = $role->relationship('resource')[0]->id ?? '';
         $role_id = str_replace('-','_',$role->id);

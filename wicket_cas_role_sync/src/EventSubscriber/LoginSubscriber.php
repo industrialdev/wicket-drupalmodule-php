@@ -70,6 +70,12 @@ class LoginSubscriber implements EventSubscriberInterface {
         if (!empty($whitelisted_roles) && !in_array($uuid, $whitelisted_roles)) {
           continue;
         }
+        // skip the Wicket "administrator" role from being synced.
+        // this gets too confusing when in Drupal considering its built in "Administrator" role.
+        // Hence why usually a new role in Wicket is created called "Drupal Admin" instead
+        if ($role == 'administrator') {
+          continue;
+        }
         // first check to see if this role exists in Drupal
         $role_exists = \Drupal\user\Entity\Role::load($uuid);
         // if not, create it
