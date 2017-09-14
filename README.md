@@ -11,7 +11,7 @@ I've usually chosen to use the merge-plugin approach by editing the main compose
 ```json
 "merge-plugin": {
     "include": [
-        "modules/custom/wicket/composer.json"
+        "modules/custom/wicket-drupal8module-php/composer.json"
     ],
 },
 ```
