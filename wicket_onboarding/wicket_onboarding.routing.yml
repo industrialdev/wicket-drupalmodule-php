@@ -1,10 +1,20 @@
 wicket_onboarding.onboarding:
-  path: '/member/onboarding'
+  path: '/member/onboarding/{param1}/{param2}'
   defaults:
     _controller: '\Drupal\wicket_onboarding\Controller\WicketOnboardingController::onboarding'
     _title: 'Member Onboarding'
+    param1: 'hey'
+    param2: 'there'
   requirements:
     _user_is_logged_in: 'TRUE'
+
+# wicket_onboarding.onboarding:
+#   path: '/member/onboarding'
+#   defaults:
+#     _controller: '\Drupal\wicket_onboarding\Controller\WicketOnboardingController::onboarding'
+#     _title: 'Member Onboarding'
+#   requirements:
+#     _user_is_logged_in: 'TRUE'
 
 wicket_onboarding.settings:
   path: '/admin/config/wicket-onboarding/settings'
