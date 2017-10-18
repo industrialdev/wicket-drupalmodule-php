@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Implements hook_theme();
+ *
+ */
+function wicket_order_details_theme($existing, $type, $theme, $path) {
+  return [
+    'order_details' => [
+      'variables' => [
+        'output'  => NULL,
+        'api_root'  => NULL,
+        'access_token'  => NULL,
+      ],
+    ]
+  ];
+}

@@ -1,0 +1,5 @@
+name: Wicket Order Details
+description: wicket.io module that provides order details from Wicket
+core: 8.x
+package: Custom
+type: module
