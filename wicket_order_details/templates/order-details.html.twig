@@ -1,10 +1,14 @@
 {{output}}
 
+<div id="wicket-order-details-container"></div>
 <script type="text/javascript">
     Wicket.ready(function () {
       Wicket.widgets.createOrderDetails({
-        'apiRoot' => {{api_root}},
-        'accessToken' => {{access_token}},
+        'apiRoot':"{{api_root}}",
+        'accessToken':"{{access_token}}",
+        'lang':"{{language}}",
+        'orderId':"{{order_id}}",
+        'rootEl':document.getElementById('wicket-order-details-container')
       });
     });
 </script>

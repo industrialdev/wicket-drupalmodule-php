@@ -10,6 +10,8 @@ function wicket_order_details_theme($existing, $type, $theme, $path) {
       'variables' => [
         'output'  => NULL,
         'api_root'  => NULL,
+        'language'  => NULL,
+        'order_id'  => NULL,
         'access_token'  => NULL,
       ],
     ]

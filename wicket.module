@@ -39,6 +39,24 @@ function wicket_api_client() {
   return $client;
 }
 
+function wicket_api_client_current_user() {
+  $client = wicket_api_client();
+
+  if ($client) {
+    $userData = \Drupal::service('user.data');
+    $user = \Drupal::currentUser();
+    $person_id = $userData->get('wicket', $user->id(), 'personUuid');
+
+    if ($person_id) {
+      $client->authorize($person_id);
+    } else {
+      $client = null;
+    }
+  }
+
+  return $client;
+}
+
 function wicket_get_person_by_id($uuid){
   static $person;
 

@@ -28,20 +28,11 @@ class WicketOrderDetails extends BlockBase implements BlockPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
-    $output = $this->wicket_order_details_block_view();
-    $client = wicket_api_client();
-
-    $uid = \Drupal::currentUser()->id();
-    $userData = \Drupal::service('user.data');
-    $person_id = $userData->get('wicket', $uid, 'personUuid');
-    $client->authorize($person_id);
+    $output = '';
+    $client = wicket_api_client_current_user();
 
     if (!$client) {
       $output = t('Error initializing wicket api client');
-    }
-
-    if (empty($person_id)) {
-      $output = t('Invalid user');
     }
 
     $build = [
@@ -49,6 +40,8 @@ class WicketOrderDetails extends BlockBase implements BlockPluginInterface {
       '#output' => $output,
       '#api_root' => rtrim($client->getApiEndpoint(), '/'),
       '#access_token' => $client->getAccessToken(),
+      '#language' => \Drupal::languageManager()->getCurrentLanguage()->getId(),
+      '#order_id' => $_GET['order_id'] ?? '',
       '#attached' => [
         'library' => ['wicket_order_details/wicket_admin_react'],
         'drupalSettings' => [
@@ -65,10 +58,6 @@ class WicketOrderDetails extends BlockBase implements BlockPluginInterface {
 
     return $build;
 
-  }
-
-  function wicket_order_details_block_view() {
-    return ['#markup' => '<p>testing the order details</p>'];
   }
 
 }
