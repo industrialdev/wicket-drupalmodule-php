@@ -1,0 +1,26 @@
+{% if orders %}
+  <table class='order_history'>
+    <thead>
+      <tr>
+        <th scope='col'>{{'Order #'|t}}</th>
+        <th scope='col'>{{'Order Placed'|t}}</th>
+        <th scope='col'>{{'Order Total'|t}}</th>
+        <th scope='col'>{{'Status'|t}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td><strong>{{order.order_number}}</strong></td>
+          <td><strong>{{order.order_date}}</strong></td>
+          <td><strong>{{order.order_total}}</strong></td>
+          <td><strong>{{order.order_status}}</strong></td>
+          <td class="text-right"><a href="{{order.order_details_link}}">{{'View Order Detail'|t}}</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <h2>{{'No Orders Found'}}</h2>
+{% endif %}

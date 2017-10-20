@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Implements hook_theme();
+ */
+function wicket_order_history_theme($existing, $type, $theme, $path) {
+  return [
+    'order_history' => [
+      'variables' => [
+        'orders'  => NULL,
+      ],
+    ]
+  ];
+}
