@@ -66,7 +66,14 @@ class wicketSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => t('Parent Org'),
       '#default_value' => $config->get($this->getFormId() . '_parent_org', ''),
-      '#description' => t('Top level organization used for creating new people on the create account form. This is the "alternate name" found in Wicket'),
+      '#description' => t('Top level organization used for creating new people on the create account form. <br>This is the "alternate name" found in Wicket under "Organizations" for the top most organization.'),
+      '#required' => TRUE,
+    );
+    $form[$this->getFormId() . '_wicket_admin'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Wicket Admin'),
+      '#default_value' => $config->get($this->getFormId() . '_wicket_admin', ''),
+      '#description' => t('The address of the admin interface. Ex: https://wicket.abc.ind.ninja'),
       '#required' => TRUE,
     );
 
@@ -85,6 +92,7 @@ class wicketSettingsForm extends ConfigFormBase {
       ->set($this->getFormId() . '_secret_key', $form_state->getValue($this->getFormId() . '_secret_key'))
       ->set($this->getFormId() . '_person_id', $form_state->getValue($this->getFormId() . '_person_id'))
       ->set($this->getFormId() . '_parent_org', $form_state->getValue($this->getFormId() . '_parent_org'))
+      ->set($this->getFormId() . '_wicket_admin', $form_state->getValue($this->getFormId() . '_wicket_admin'))
       ->save();
 
     parent::submitForm($form, $form_state);
