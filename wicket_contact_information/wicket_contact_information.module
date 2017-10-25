@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Implements hook_theme();
+ */
+function wicket_contact_information_theme($existing, $type, $theme, $path) {
+  return [
+    'contact_information' => [
+      'variables' => [
+        'output'  => NULL,
+        'api_root'  => NULL,
+        'language'  => NULL,
+        'access_token'  => NULL,
+      ],
+    ]
+  ];
+}

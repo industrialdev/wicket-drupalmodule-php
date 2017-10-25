@@ -1,9 +1,9 @@
 <?php
-namespace Drupal\wicket_order_details\Plugin\Block;
+namespace Drupal\wicket_contact_information\Plugin\Block;
 
 /**
  * @file
- * Contains \Drupal\wicket_order_details\Plugin\Block\WicketOrderDetails.
+ * Contains \Drupal\wicket_contact_information\Plugin\Block\WicketContactInformation.
  */
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Block\BlockPluginInterface;
@@ -14,16 +14,16 @@ use Drupal\Core\Link;
 use Drupal\Core\Site\Settings;
 use Drupal\wicket\Form\wicketSettingsForm;
 /**
- * Provides a detailed view for a Wicket Order
+ * Provides a form from Wicket to update person contact information
  *
  * @Block(
- *   id = "wicket_order_details",
- *   admin_label = @Translation("Wicket Order Details"),
+ *   id = "wicket_contact_information",
+ *   admin_label = @Translation("Wicket Contact Information"),
  *   category = @Translation("Custom")
  * )
  */
 
-class WicketOrderDetails extends BlockBase implements BlockPluginInterface {
+class WicketContactInformation extends BlockBase implements BlockPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -39,16 +39,15 @@ class WicketOrderDetails extends BlockBase implements BlockPluginInterface {
     }
 
     $build = [
-      '#theme' => 'order_details',
+      '#theme' => 'contact_information',
       '#output' => $output,
       '#api_root' => rtrim($client->getApiEndpoint(), '/'),
       '#access_token' => $client->getAccessToken(),
       '#language' => \Drupal::languageManager()->getCurrentLanguage()->getId(),
-      '#order_id' => $_GET['order_id'] ?? '',
       '#attached' => [
-        'library' => ['wicket_order_details/wicket_admin_react'],
+        'library' => ['wicket_contact_information/wicket_admin_react'],
         'drupalSettings' => [
-          'wicket_order_details' => [
+          'wicket_contact_information' => [
             'wicket_admin_react_url' => "$wicket_admin/dist/widgets.js"
           ]
         ]

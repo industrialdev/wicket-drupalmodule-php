@@ -1,0 +1,6 @@
+wicket_admin_react:
+  header: true
+  js:
+    js/wicket_admin.js: {}
+  dependencies:
+    - core/drupalSettings
