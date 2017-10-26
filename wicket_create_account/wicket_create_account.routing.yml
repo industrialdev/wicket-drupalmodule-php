@@ -4,4 +4,12 @@ wicket_create_account.create_account_page:
     _controller: '\Drupal\wicket_create_account\Controller\WicketCreateAccountController::create_account'
     _title: 'Create Account'
   requirements:
-      _permission: 'access content'
+    _permission: 'access content'
+
+wicket_create_account_settings.settings:
+  path: '/admin/config/wicket-create-account/settings'
+  defaults:
+    _form: '\Drupal\wicket_create_account\Form\wicketCreateAccountSettingsForm'
+    _title: 'Create Account Settings'
+  requirements:
+    _permission: 'administer site configuration'

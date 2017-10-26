@@ -1,0 +1,4 @@
+wicket_create_account_settings.settings:
+  title: 'Settings'
+  route_name: wicket_create_account_settings.settings
+  base_route: wicket_create_account_settings.settings

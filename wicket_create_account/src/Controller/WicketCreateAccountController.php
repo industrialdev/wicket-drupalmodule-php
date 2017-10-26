@@ -3,6 +3,7 @@
 namespace Drupal\wicket_create_account\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\wicket_create_account\Form\wicketCreateAccountSettingsForm;
 
 /**
  * Provides route for showing the wicket create account form.
@@ -17,15 +18,19 @@ class WicketCreateAccountController extends ControllerBase {
    */
   public function create_account() {
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $config = \Drupal::config('wicket_create_account_settings.settings');
+    $browser_title = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_browser_title') != '' ? $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_browser_title') : null;
+    $page_title = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_title') != '' ? $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_title') : null;
+    $page_description = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_description') != '' ? $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_description') : null;
 
     $form_class = '\Drupal\wicket_create_account\Form\wicketCreateAccountForm';
     $build['form'] = \Drupal::formBuilder()->getForm($form_class);
 
     return [
-      '#title' => 'Create your AOM Login Account',
-      '#markup' => '<h1>Create your AOM Login Account</h1><p>To become a member or place an order with the Association of Ontario Midwives, please start by creating a login account. After you submit, check your email to confirm your account.</p>
-       <p>Required fields marked by <span class="required">*</span></p>',
-      'form' => $build];
+      '#title' => $browser_title,
+      '#markup' => "<h1>$page_title</h1>$page_description<p>Required fields marked by <span class='required'>*</span></p>",
+      'form' => $build
+    ];
   }
 
 }

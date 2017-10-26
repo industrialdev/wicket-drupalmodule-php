@@ -12,13 +12,6 @@ wicket_onboarding.onboarding:
   requirements:
     _user_is_logged_in: 'TRUE'
 
-# wicket_onboarding.onboarding:
-#   path: '/member/onboarding'
-#   defaults:
-#     _controller: '\Drupal\wicket_onboarding\Controller\WicketOnboardingController::onboarding'
-#     _title: 'Member Onboarding'
-#   requirements:
-#     _user_is_logged_in: 'TRUE'
 
 wicket_onboarding.settings:
   path: '/admin/config/wicket-onboarding/settings'
