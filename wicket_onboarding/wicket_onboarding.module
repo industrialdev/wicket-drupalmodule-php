@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Implements hook_theme();
+ */
+function wicket_onboarding_theme($existing, $type, $theme, $path) {
+  return [
+    'onboarding' => [
+      'variables' => [
+        'output' => NULL,
+        'api_root' => NULL,
+        'base_name' => NULL,
+        'order_completed_path' => NULL,
+        'language' => NULL,
+        'access_token' => NULL,
+      ],
+    ]
+  ];
+}

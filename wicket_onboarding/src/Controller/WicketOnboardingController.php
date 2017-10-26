@@ -3,6 +3,7 @@
 namespace Drupal\wicket_onboarding\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\wicket\Form\wicketSettingsForm;
 use Drupal\wicket_onboarding\Form\wicketOnboardingSettingsForm;
 
 /**
@@ -19,63 +20,57 @@ class WicketOnboardingController extends ControllerBase {
   public function onboarding() {
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
-    $current_base_name = $language == 'fr' ? '/fr/member/onboarding' : '/member/onboarding';
-    $client = wicket_api_client();
+    $client = wicket_api_client_current_user();
+    $current_base_name = \Drupal\Core\Url::fromUserInput('/member/onboarding')->toString();
 
     $uid = \Drupal::currentUser()->id();
     $userData = \Drupal::service('user.data');
     $person_id = $userData->get('wicket', $uid, 'personUuid');
 
-    $config = \Drupal::config('wicket_onboarding.settings');
-    $onboarding_embed_url = $config->get(wicketOnboardingSettingsForm::FORM_ID . '_embed_url');
+    $onboarding_config = \Drupal::config('wicket_onboarding.settings');
+    $onboarding_embed_url = $onboarding_config->get(wicketOnboardingSettingsForm::FORM_ID . '_embed_url');
+    $order_completed_path = $onboarding_config->get(wicketOnboardingSettingsForm::FORM_ID . '_order_completed_path');
+    $wicket_config = \Drupal::config('wicket.settings');
+    $wicket_admin = $wicket_config->get(wicketSettingsForm::FORM_ID . '_wicket_admin') ?? null;
 
+    $output = '';
     if (!$client) {
-      drupal_set_message(t('Error initializing wicket api client'), 'error');
-      return [];
+      $output = t('Error initializing wicket api client');
     }
 
     if (empty($onboarding_embed_url)) {
-      drupal_set_message(t('Invalid embed url'), 'error');
-      return [];
+      $output = t('Invalid embed url');
     }
 
     if (empty($person_id)) {
-      drupal_set_message(t('Invalid user.'), 'error');
-      return [];
+      $output = t('Invalid user.');
     }
 
     $client->authorize($person_id);
 
-    $order_completed_path = $config->get(wicketOnboardingSettingsForm::FORM_ID . '_order_completed_path');
-    $output = ["#markup" => '<div id="wicket-onboarding-content-root" class="wicket"></div>'];
-    // https://medium.com/@ToddZebert/loading-and-using-javascript-in-drupal-8-f6643d19ae0f
-    $output['#attached']['library'][] = 'wicket_onboarding/wicket_onboarding';
-    $output['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        // The HTML tag to add, in this case a tag.
-        '#tag' => 'script',
-        // The value of the HTML tag, here we want to end up with
-        '#value' => '',
-        // Set attributes like src to load a file.
-        '#attributes' => array('src' => $onboarding_embed_url),
+    $build = [
+      '#theme' => 'onboarding',
+      '#output' => $output,
+      '#api_root' => rtrim($client->getApiEndpoint(), '/'),
+      '#access_token' => $client->getAccessToken(),
+      '#language' => \Drupal::languageManager()->getCurrentLanguage()->getId(),
+      '#base_name' => $current_base_name,
+      '#order_completed_path' => $order_completed_path,
+      '#attached' => [
+        'library' => ['wicket_onboarding/wicket_admin_react'],
+        'drupalSettings' => [
+          'wicket_onboarding' => [
+            'wicket_admin_react_url' => "$wicket_admin/dist/widgets.js"
+          ]
+        ]
       ],
-      // A key, to make it possible to recognize this HTML element when altering.
-      'wicket_onboarding',
-    ];
-
-    $output['#attached']['drupalSettings']['wicket_onboarding']['wicket_onboarding']['data'] =
-    [
-      'wicketOnboarding' => [
-        'baseName' => $current_base_name,
-        'apiRoot' => rtrim($client->getApiEndpoint(), '/'),
-        'accessToken' => $client->getAccessToken(),
-        'lang' => $language,
-        'orderCompletePath' => $order_completed_path
+      '#cache' => [
+        'context' => ['url.query_args'],
+        'max-age' => 0
       ]
     ];
 
-    return $output;
+    return $build;
   }
 
 }

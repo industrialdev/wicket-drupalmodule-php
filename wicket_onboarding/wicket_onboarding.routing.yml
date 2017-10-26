@@ -12,7 +12,6 @@ wicket_onboarding.onboarding:
   requirements:
     _user_is_logged_in: 'TRUE'
 
-
 wicket_onboarding.settings:
   path: '/admin/config/wicket-onboarding/settings'
   defaults:

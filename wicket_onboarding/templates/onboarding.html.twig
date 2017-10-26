@@ -1,0 +1,15 @@
+{{output}}
+
+<div id="wicket-onboarding-container"></div>
+<script type="text/javascript">
+    Wicket.ready(function () {
+      Wicket.widgets.createOnboarding({
+        'baseName':"{{base_name}}",
+        'apiRoot':"{{api_root}}",
+        'accessToken':"{{access_token}}",
+        'lang':"{{language}}",
+        'orderCompletePath':"{{order_completed_path}}",
+        'rootEl':document.getElementById('wicket-onboarding-container')
+      });
+    });
+</script>
