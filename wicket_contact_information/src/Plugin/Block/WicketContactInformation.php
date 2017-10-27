@@ -33,6 +33,9 @@ class WicketContactInformation extends BlockBase implements BlockPluginInterface
     $client = wicket_api_client_current_user();
     $config = \Drupal::config('wicket.settings');
     $wicket_admin = $config->get(wicketSettingsForm::FORM_ID . '_wicket_admin') ?? null;
+    $uid = \Drupal::currentUser()->id();
+    $userData = \Drupal::service('user.data');
+    $person_id = $userData->get('wicket', $uid, 'personUuid');
 
     if (!$client) {
       $output = t('Error initializing wicket api client');
@@ -44,6 +47,7 @@ class WicketContactInformation extends BlockBase implements BlockPluginInterface
       '#api_root' => rtrim($client->getApiEndpoint(), '/'),
       '#access_token' => $client->getAccessToken(),
       '#language' => \Drupal::languageManager()->getCurrentLanguage()->getId(),
+      '#person_id' => $person_id,
       '#attached' => [
         'library' => ['wicket_contact_information/wicket_admin_react'],
         'drupalSettings' => [
@@ -59,7 +63,6 @@ class WicketContactInformation extends BlockBase implements BlockPluginInterface
     ];
 
     return $build;
-
   }
 
 }

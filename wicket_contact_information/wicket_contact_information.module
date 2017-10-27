@@ -9,8 +9,9 @@ function wicket_contact_information_theme($existing, $type, $theme, $path) {
       'variables' => [
         'output'  => NULL,
         'api_root'  => NULL,
-        'language'  => NULL,
         'access_token'  => NULL,
+        'language'  => NULL,
+        'person_id'  => NULL,
       ],
     ]
   ];
