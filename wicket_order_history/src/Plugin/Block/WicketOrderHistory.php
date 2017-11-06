@@ -65,7 +65,7 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
 
         // only show completed orders
         if (($order->state != 'completed' && $order->state != 'refunded') || $order->completed_at == '') {
-          continue;
+          // continue;
         }
 
         $temp_order['order_number'] = $order->number;
