@@ -68,7 +68,6 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
           continue;
         }
 
-        $order->completed_at = 'march 2 2019';
         $temp_order['order_number'] = $order->number;
         $temp_order['order_date'] = format_date(strtotime($order->completed_at), 'custom', 'F j, Y');
         $temp_order['order_total'] = $language == 'fr' ? number_format($order->total, 2, ',', "." ).' $' : '$'.number_format($order->total, 2, '.', "." );
