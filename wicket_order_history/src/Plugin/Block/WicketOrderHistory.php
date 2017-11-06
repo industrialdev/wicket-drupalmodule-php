@@ -69,7 +69,8 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
         }
 
         $temp_order['order_number'] = $order->number;
-        $temp_order['order_date'] = format_date(strtotime($order->completed_at), 'custom', 'F j, Y');
+        $date = $order->created_at;
+        $temp_order['order_date'] = format_date(strtotime($date), 'custom', 'F j, Y');
         $temp_order['order_total'] = $language == 'fr' ? number_format($order->total, 2, ',', "." ).' $' : '$'.number_format($order->total, 2, '.', "." );
         $temp_order['order_status'] = ucfirst(t($order->state));
         $temp_order['order_details_link'] = roots_i18n_link('order-history-details').'?order_id='.$order->id;
