@@ -53,7 +53,9 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
 
     try {
       $orders = get_member_orders();
-      $orders = array_reverse($orders);
+      if ($orders) {
+        $orders = array_reverse($orders);
+      }
     } catch (Exception $e) {
     }
 
