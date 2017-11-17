@@ -59,11 +59,14 @@ function wicket_api_client_current_user() {
 
 function wicket_get_person_by_id($uuid){
   static $person;
-
   if ($uuid) {
-    $client = wicket_api_client();
-    $person = $client->people->fetch($uuid);
-    return $person;
+    try {
+      $client = wicket_api_client();
+      $person = $client->people->fetch($uuid);
+      return $person;
+    } catch (Exception $e) {
+      return false;
+    }
   }
 }
 
