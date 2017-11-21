@@ -20,3 +20,7 @@ Then do a composer update in the root
 
 It uses the Industrial PHP Wicket SDK
 https://github.com/industrialdev/wicket-sdk-php.git
+
+## Important Note
+
+This module is common to all installs of Drupal 8 using Wicket. There is usually, for now, a lib/wicket.php within the theme with logic specific to each client, but any code changes to this module should be able to be made to all clients that use this module.
