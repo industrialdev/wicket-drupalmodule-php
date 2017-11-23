@@ -39,13 +39,21 @@ function wicket_api_client() {
   return $client;
 }
 
+function wicket_current_person_uuid() {
+  /** @var UserDataInterface $userData */
+  $userData = \Drupal::service('user.data');
+  $user = \Drupal::currentUser();
+
+  $person_id = $userData->get('wicket', $user->id(), 'personUuid');
+
+  return $person_id;
+}
+
 function wicket_api_client_current_user() {
   $client = wicket_api_client();
 
   if ($client) {
-    $userData = \Drupal::service('user.data');
-    $user = \Drupal::currentUser();
-    $person_id = $userData->get('wicket', $user->id(), 'personUuid');
+    $person_id = wicket_current_person_uuid();
 
     if ($person_id) {
       $client->authorize($person_id);
@@ -68,6 +76,21 @@ function wicket_get_person_by_id($uuid){
       return false;
     }
   }
+}
+
+function wicket_get_included_resource($resource, $included_resource_id) {
+  if ($resource && $included_resource_id) {
+    return $resource->included()->filter(function ($included) use ($included_resource_id) {
+      if ($included_resource_id instanceof \Wicket\Entities\Base) {
+        return $included['type'] === $included_resource_id->type && $included['id'] === $included_resource_id->id;
+      } else {
+        return $included['type'] === $included_resource_id['type'] && $included['id'] === $included_resource_id['id'];  
+      }
+      
+    })->first();
+  }
+
+  return null;
 }
 
 function wicket_get_person_roles_by_id($uuid){
@@ -94,4 +117,31 @@ function wicket_get_person_roles_by_id($uuid){
     }
     return $roles;
   }
+}
+
+function wicket_build_collection($response, $client) {
+  if ($response) {
+    // TOOD: This is needed due to current limitations with the wicket php sdk, (relationships are not set for collections).
+    // Should refactor this logic back into the SDK.
+    $data = array_map(function ($item) use ($response){
+      $entity = \Wicket\Entities\Base::fromJsonAPI($item, true);
+      $entity->addIncluded($response['included']);
+      return $entity;
+
+    }, $response['data']);
+
+    $collection = new \Wicket\WicketCollection([], $client);
+    $collection = $collection->concat($data);
+
+    return $collection;
+  }
+
+  return null;
+}
+
+function wicket_get_person_orders($person_uuid, $args = [], $client = null) {
+  $client = $client ?: wicket_api_client_current_user();
+  $response = $client->get("/people/$person_uuid/orders", $args);
+
+  return wicket_build_collection($response, $client);
 }

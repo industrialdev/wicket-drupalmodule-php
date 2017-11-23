@@ -52,10 +52,8 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
     try {
-      $orders = get_member_orders();
-      if ($orders) {
-        $orders = array_reverse($orders);
-      }
+      $orders = wicket_get_person_orders(wicket_current_person_uuid());
+      $orders = $orders ? array_reverse($orders->all()) : null;
     } catch (Exception $e) {
     }
 
@@ -63,12 +61,19 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
       $built_orders = [];
       foreach ($orders as $order) {
         $temp_order = [];
-        $order = get_order($order->id);
 
-        // only show completed orders
-        if (($order->state != 'completed' && $order->state != 'refunded') || $order->completed_at == '') {
-          // continue;
+        $interval = wicket_get_included_resource($order, $order->relationship('interval')[0]);
+        $order_interval_starts_at = strtotime($interval['attributes']['starts_at']);
+
+        // TODO: remove condition of only showing orders later than 2017
+        if (!($interval && intval(date("Y", $order_interval_starts_at)) > 2017)) {
+          continue;
         }
+        
+        // only show completed orders
+        // if (($order->state != 'completed' && $order->state != 'refunded') || $order->completed_at == '') {
+          // continue;
+        // }
 
         $temp_order['order_number'] = $order->number;
         $date = $order->created_at;
