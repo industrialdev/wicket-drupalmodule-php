@@ -84,12 +84,11 @@ class LoginSubscriber implements EventSubscriberInterface {
           $new_role = \Drupal\user\Entity\Role::create($new_role);
           $new_role->save();
         }
-        if (!$user->hasRole($uuid)) {
-          $user->addRole($uuid);
-          $user->save();
+        if (!$event->getAccount()->hasRole($uuid)) {
+          $event->getAccount()->addRole($uuid);
+          $event->getAccount()->save();
         }
       }
     }
   }
-
 }

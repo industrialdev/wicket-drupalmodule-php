@@ -84,9 +84,8 @@ function wicket_get_included_resource($resource, $included_resource_id) {
       if ($included_resource_id instanceof \Wicket\Entities\Base) {
         return $included['type'] === $included_resource_id->type && $included['id'] === $included_resource_id->id;
       } else {
-        return $included['type'] === $included_resource_id['type'] && $included['id'] === $included_resource_id['id'];  
+        return $included['type'] === $included_resource_id['type'] && $included['id'] === $included_resource_id['id'];
       }
-      
     })->first();
   }
 
