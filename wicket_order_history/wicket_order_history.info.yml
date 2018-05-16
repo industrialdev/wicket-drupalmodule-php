@@ -1,5 +1,5 @@
 name: Wicket Order History
 description: wicket.io module that provides order history from Wicket
 core: 8.x
-package: Custom
+package: Wicket
 type: module
