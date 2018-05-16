@@ -1,6 +1,0 @@
-# https://www.drupal.org/docs/8/creating-custom-modules/defining-and-using-your-own-configuration-in-drupal-8
-wicket_create_account_settings.settings:
-  title: 'Wicket Create Account'
-  base_route_name: wicket_create_account_settings.settings
-  names:
-    - wicket_create_account_settings.settings

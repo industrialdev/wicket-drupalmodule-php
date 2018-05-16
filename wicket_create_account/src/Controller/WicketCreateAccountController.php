@@ -19,9 +19,9 @@ class WicketCreateAccountController extends ControllerBase {
   public function create_account() {
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
     $config = \Drupal::config('wicket_create_account_settings.settings');
-    $browser_title = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_browser_title') != '' ? $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_browser_title') : null;
-    $page_title = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_title') != '' ? $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_title') : null;
-    $page_description = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_description') != '' ? $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_description') : null;
+    $browser_title = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_browser_title') != '' ? t($config->get(wicketCreateAccountSettingsForm::FORM_ID . '_browser_title')) : null;
+    $page_title = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_title') != '' ? t($config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_title')) : null;
+    $page_description = $config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_description') != '' ? t($config->get(wicketCreateAccountSettingsForm::FORM_ID . '_page_description')) : null;
 
     $form_class = '\Drupal\wicket_create_account\Form\wicketCreateAccountForm';
     $build['form'] = \Drupal::formBuilder()->getForm($form_class);
