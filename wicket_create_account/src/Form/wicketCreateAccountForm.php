@@ -5,6 +5,7 @@ namespace Drupal\wicket_create_account\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\wicket\Form\wicketSettingsForm;
+use Drupal\wicket_create_account\WicketCreateAccount;
 
 /**
  * Provide a wicket person create account form.
@@ -166,6 +167,11 @@ class wicketCreateAccountForm extends ConfigFormBase {
       drupal_set_message(t('The account could not be created. @errors',['@errors' => $rendered_message]), 'error');
       $form_state->setRebuild();
     }else {
+      // first dispatch an event to let other modules know we're creating a new Wicket person
+      // https://valuebound.com/resources/blog/how-to-define-an-event-dispatcher-and-subscriber-drupal-8
+      $dispatcher = \Drupal::service('event_dispatcher');
+      $event = new WicketCreateAccount($form_state);
+      $dispatcher->dispatch(WicketCreateAccount::CREATE_ACCOUNT, $event);
       // redirect instead of staying on page
       header('Location: /verify-account');
       die;
