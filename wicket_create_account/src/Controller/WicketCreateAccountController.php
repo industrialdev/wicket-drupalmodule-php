@@ -28,7 +28,7 @@ class WicketCreateAccountController extends ControllerBase {
 
     return [
       '#title' => $browser_title,
-      '#markup' => "<h1>$page_title</h1>$page_description<p>Required fields marked by <span class='required'>*</span></p>",
+      '#markup' => "<h1>$page_title</h1>$page_description".t("<p>Required fields marked by <span class='required'>*</span></p>"),
       'form' => $build
     ];
   }
