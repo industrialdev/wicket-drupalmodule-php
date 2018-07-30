@@ -9,6 +9,7 @@
 namespace Drupal\wicket_cas_role_sync\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\wicket_cas_role_sync\Form\wicketCasRoleSyncSettingsForm;
 // use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -41,13 +42,21 @@ class KernelSubscriber implements EventSubscriberInterface {
    * @param GetResponseEvent $event
    */
   public function kernel_event($event) {
+    $config = \Drupal::config('wicket_cas_role_sync.settings');
+    $sync_roles_during_every_page_request = $config->get(wicketCasRoleSyncSettingsForm::FORM_ID . '_sync_roles_during_every_page_request');
+
+    // only sync roles during each page request when the global option is on
+    if (!$sync_roles_during_every_page_request) {
+      return true;
+    }
+
     $userData = \Drupal::service('user.data');
     $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
     $person_id = $userData->get('wicket', $user->id(), 'personUuid');
 
     /**-------------------------------------------------------------------
      * SYNC ROLES - similar to how we do it on login (LoginSubscriber.php)
-     -------------------------------------------------------------------*/
+     --------------------------------------------------------------------*/
     if ($person_id) {
       // get current user roles from Wicket
       $roles = wicket_get_person_roles_by_id($person_id);

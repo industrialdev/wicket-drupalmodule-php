@@ -65,14 +65,20 @@ class wicketCasRoleSyncSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => t('Sync all roles'),
       '#default_value' => $config->get($this->getFormId() . '_sync_all_roles', ''),
-      '#description' => t('If checked, all roles on each user logging in will be considered for synchronization into Drupal.'),
+      '#description' => t('If checked, all roles will be considered for synchronization into Drupal.'),
+    );
+    $form[$this->getFormId() . '_sync_roles_during_every_page_request'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Sync roles during each page request'),
+      '#default_value' => $config->get($this->getFormId() . '_sync_roles_during_every_page_request', ''),
+      '#description' => t('If checked, role synchronization will occur during each page request. <br>NOTE: If this functionality isn\'t needed, this should be turned off for performance reasons.'),
     );
     $form[$this->getFormId() . '_whitelisted_roles'] = array(
       '#type' => 'checkboxes',
       '#options' => $role_options,
       '#title' => t('Whitelisted Roles'),
       '#default_value' => $config->get($this->getFormId() . '_whitelisted_roles', ''),
-      '#description' => t('These are all the roles in Wicket. Choose which to whitelist (which ones will be considered for synchronization when users log in to Drupal)'),
+      '#description' => t('These are all the roles in Wicket. Choose which to whitelist (which ones will be considered for synchronization).'),
     );
     $form['#attached']['library'][] = 'wicket_cas_role_sync/wicket_cas_role_sync';
 
@@ -87,6 +93,7 @@ class wicketCasRoleSyncSettingsForm extends ConfigFormBase {
     $this->config('wicket_cas_role_sync.settings')
       // Set the submitted configuration setting
       ->set($this->getFormId() . '_sync_all_roles', $form_state->getValue($this->getFormId() . '_sync_all_roles'))
+      ->set($this->getFormId() . '_sync_roles_during_every_page_request', $form_state->getValue($this->getFormId() . '_sync_roles_during_every_page_request'))
       ->set($this->getFormId() . '_whitelisted_roles', $form_state->getValue($this->getFormId() . '_whitelisted_roles'))
       ->save();
 
