@@ -66,16 +66,19 @@ function wicket_api_client_current_user() {
 }
 
 function wicket_get_person_by_id($uuid){
-  static $person;
-  if ($uuid) {
-    try {
-      $client = wicket_api_client();
-      $person = $client->people->fetch($uuid);
-      return $person;
-    } catch (Exception $e) {
-      return false;
+  static $person = null;
+  if (is_null($person)) {
+    if ($uuid) {
+      try {
+        $client = wicket_api_client();
+        $person = $client->people->fetch($uuid);
+        return $person;
+      } catch (Exception $e) {
+        return false;
+      }
     }
   }
+  return $person;
 }
 
 function wicket_get_included_resource($resource, $included_resource_id) {
@@ -93,29 +96,31 @@ function wicket_get_included_resource($resource, $included_resource_id) {
 }
 
 function wicket_get_person_roles_by_id($uuid){
-  static $person;
-  $person = wicket_get_person_by_id($uuid);
-  if ($person) {
-    $variants = $person->included()->filter(function ($item) {
-      return isset($item['type']) && $item['type'] == 'roles';
-    });
+  static $roles = null;
+  if (is_null($roles)) {
+    $person = wicket_get_person_by_id($uuid);
+    if ($person) {
+      $variants = $person->included()->filter(function ($item) {
+        return isset($item['type']) && $item['type'] == 'roles';
+      });
 
-    $roles = [];
-    foreach ($variants->all() as $role) {
-      // if this role has an associated ORG, get its name and add as a suffix
-      $role_id = str_replace('-','_',$role['id']);
-      if (isset($role['relationships']['resource']['data']['id'])) {
-        $org_id = $role['relationships']['resource']['data']['id'];
-        $client = wicket_api_client();
-        $org = $client->organizations->fetch($org_id);
-        // convert dashes to underscores for Drupal's role machine name. It doesn't accept dashes
-        $roles[$role_id] = $org->legal_name.' - '.$role['attributes']['name'];
-      }else {
-        $roles[$role_id] = $role['attributes']['name'];
+      $roles = [];
+      foreach ($variants->all() as $role) {
+        // if this role has an associated ORG, get its name and add as a suffix
+        $role_id = str_replace('-','_',$role['id']);
+        if (isset($role['relationships']['resource']['data']['id'])) {
+          $org_id = $role['relationships']['resource']['data']['id'];
+          $client = wicket_api_client();
+          $org = $client->organizations->fetch($org_id);
+          // convert dashes to underscores for Drupal's role machine name. It doesn't accept dashes
+          $roles[$role_id] = $org->legal_name.' - '.$role['attributes']['name'];
+        }else {
+          $roles[$role_id] = $role['attributes']['name'];
+        }
       }
     }
-    return $roles;
   }
+  return $roles;
 }
 
 function wicket_build_collection($response, $client) {
