@@ -60,7 +60,7 @@ class WicketOnboardingController extends ControllerBase {
         'library' => ['wicket_onboarding/wicket_admin_react'],
         'drupalSettings' => [
           'wicket_onboarding' => [
-            'wicket_admin_react_url' => "$wicket_admin/dist/widgets.js"
+            'wicket_admin_react_url' => $onboarding_embed_url
           ]
         ]
       ],
