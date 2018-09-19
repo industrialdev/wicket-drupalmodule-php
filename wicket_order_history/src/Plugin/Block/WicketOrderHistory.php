@@ -65,11 +65,6 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
         $interval = wicket_get_included_resource($order, $order->relationship('interval')[0]);
         $order_interval_starts_at = strtotime($interval['attributes']['starts_at']);
 
-        // TODO: remove condition of only showing orders later than 2017
-        if (!($interval && intval(date("Y", $order_interval_starts_at)) > 2017)) {
-          continue;
-        }
-        
         // only show completed orders
         // if (($order->state != 'completed' && $order->state != 'refunded') || $order->completed_at == '') {
           // continue;
@@ -80,7 +75,7 @@ class WicketOrderHistory extends BlockBase implements BlockPluginInterface {
         $temp_order['order_date'] = format_date(strtotime($date), 'custom', 'F j, Y');
         $temp_order['order_total'] = $language == 'fr' ? number_format($order->total, 2, ',', "." ).' $' : '$'.number_format($order->total, 2, '.', "." );
         $temp_order['order_status'] = ucfirst(t($order->state));
-        $temp_order['order_details_link'] = roots_i18n_link('order-history-details').'?order_id='.$order->id;
+        $temp_order['order_details_link'] = '/order-history-details?order_id='.$order->id;
 
         $built_orders[] = $temp_order;
       }
