@@ -102,7 +102,7 @@ class wicketUpdatePasswordForm extends ConfigFormBase {
     try {
       $client = wicket_api_client();
       $client->people->update($update_user);
-    } catch (Exception $e) {
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
       $errors_obj = json_decode($e->getResponse()->getBody())->errors;
       // typically if it fails at this point, the current password is likely invalid.
       // set it up though to catch errors regardless
@@ -128,13 +128,17 @@ class wicketUpdatePasswordForm extends ConfigFormBase {
       $counter = 1;
       $output = "<ul>";
       foreach ($errors as $key => $error) {
-        if ($error->meta->field == 'user.password') {
-          $prefix = t("Password").' ';
-          $output .= "<li><a href='#edit-".str_replace('_','-',$this->getFormId().'_password')."'><strong>".t("Error @count:", array('@count' => $counter)).'</strong> '.$prefix.t($error->title)."</a></li>";
+        if ($error['meta']['field'] == 'user.current_password') {
+          $prefix = t("Current Password").' ';
+          $output .= "<li><a href='#edit-".str_replace('_','-',$this->getFormId().'_current_password')."'><strong>".t("Error @count:", array('@count' => $counter)).'</strong> '.$prefix.$error['title']."</a></li>";
         }
-        if ($error->meta->field == 'user.password_confirmation') {
+        if ($error['meta']['field'] == 'user.password') {
+          $prefix = t("Password").' ';
+          $output .= "<li><a href='#edit-".str_replace('_','-',$this->getFormId().'_password')."'><strong>".t("Error @count:", array('@count' => $counter)).'</strong> '.$prefix.$error['title']."</a></li>";
+        }
+        if ($error['meta']['field'] == 'user.password_confirmation') {
           $prefix = t("Confirm New Password").' ';
-          $output .= "<li><a href='#edit-".str_replace('_','-',$this->getFormId().'_password_confirmation')."'><strong>".t("Error @count:", array('@count' => $counter)).'</strong> '.$prefix.t($error->title)."</a></li>";
+          $output .= "<li><a href='#edit-".str_replace('_','-',$this->getFormId().'_password_confirmation')."'><strong>".t("Error @count:", array('@count' => $counter)).'</strong> '.$prefix.$error['title']."</a></li>";
         }
         $counter++;
       }
