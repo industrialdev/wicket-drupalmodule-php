@@ -1,12 +1,38 @@
 # Wicket Drupal 8 module
 
+Uses the Industrial PHP Wicket SDK
+https://github.com/industrialdev/wicket-sdk-php.git
+
 ## Installation
+
+### repositories method
+
+Add to your main composer.json (merging with your existing repositories array if it exists):
+
+```json
+"repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/industrialdev/wicket-drupal8module-php.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/industrialdev/wicket-sdk-php.git"
+    }
+]
+```
+
+Then run `composer require industrialdev/wicket-drupal8module-php`
+
+### merge-plugin method
+
+Note that this method is deprecated.
 
 Basically, it's this:
 
-https://www.drupal.org/docs/develop/using-composer/managing-dependencies-for-a-custom-project
+https://www.drupal.org/docs/develop/using-composer/managing-dependencies-for-a-custom-project#s-use-the-wikimedia-composer-merge-plugin
 
-I've usually chosen to use the merge-plugin approach by editing the main composer.json and putting this in:
+You would clone the repository manually, edit the main composer.json and add:
 
 ```json
 "merge-plugin": {
@@ -17,9 +43,6 @@ I've usually chosen to use the merge-plugin approach by editing the main compose
 ```
 
 Then do a composer update in the root
-
-It uses the Industrial PHP Wicket SDK
-https://github.com/industrialdev/wicket-sdk-php.git
 
 ## Important Note
 

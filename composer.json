@@ -1,6 +1,6 @@
 {
-  "name": "industrialdev/wicket-sdk-php",
-  "description": "PHP SDK for Wicket",
+  "name": "industrialdev/wicket-drupal8module-php",
+  "description": "Drupal 8 Module for Wicket",
   "type": "drupal-module",
   "repositories": [
     {
