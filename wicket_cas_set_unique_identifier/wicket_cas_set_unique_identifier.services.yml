@@ -1,0 +1,5 @@
+services:
+  wicket_cas_set_unique_identifier.unique_identifer_register_subscriber:
+    class: Drupal\wicket_cas_set_unique_identifier\PreRegisterEventSubscriber\PreRegisterEventSubscriber
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,8 @@
+name: Wicket CAS Set Unique Identifier
+type: module
+description: wicket.io module that provides a custom event subscriber that listens for CAS CasPreRegisterEvent thus allowing us to change the identifier used to be Wicket's UUID (not email) on fire of that CAS register event
+package: Wicket
+core: 8.x
+dependencies:
+  - cas:cas
+  - wicket:wicket
