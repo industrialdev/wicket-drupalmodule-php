@@ -5,7 +5,7 @@ https://github.com/industrialdev/wicket-sdk-php.git
 
 ## Installation
 
-### repositories method
+### repositories method (USE THIS ONE)
 
 Add to your main composer.json (merging with your existing repositories array if it exists):
 
@@ -24,7 +24,7 @@ Add to your main composer.json (merging with your existing repositories array if
 
 Then run `composer require industrialdev/wicket-drupal8module-php`
 
-### merge-plugin method
+### merge-plugin method (DO NOT USE.....NOTED FOR POSTERITY ONLY)
 
 Note that this method is deprecated.
 
