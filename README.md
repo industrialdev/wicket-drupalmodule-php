@@ -60,8 +60,8 @@ You should at least enable these 2 to start:
 
 Wicket Module Configuration
 ------------------------
-Fill out these fields here: admin/config/wicket/settings
- - API Endpoint, usually is **tps://[client-name]-api.staging.wicketcloud.com or https://[client-name]-api.wicketcloud.com for production
+Fill out these fields here: **admin/config/wicket/settings**
+ - API Endpoint, usually is **https://[client-name]-api.staging.wicketcloud.com** OR **https://[client-name]-api.wicketcloud.com** for production
 
  - APP Key - not being used, type anything for now
  
@@ -71,30 +71,30 @@ Fill out these fields here: admin/config/wicket/settings
  
  - Parent ORG - Top level organization used for creating new people on the create account form. This is the "alternate name" found in Wicket under "Organizations" for the top most organization. 
  
- - Wicket Admin - The address of the admin interface. Ex: https://[client-name]-admin.staging.wicketcloud.com or https://[client-name]-admin.wicketcloud.com for production
+ - Wicket Admin - The address of the admin interface. Ex: **https://[client-name]-admin.staging.wicketcloud.com** OR **https://[client-name]-admin.wicketcloud.com** for production
 
 
 # Available Submodules
 
-## Base Wicket Plugin
-Enable the "Wicket" plugin in the wordpress admin. This is required for any of the sub-plugins below. Enter the relevant API credentials on the provided settings form in the backend. Beyond containing the settings form, this plugin provides helper functions as well.
+## Base Wicket Module
+Enable the "Wicket" module in the Drupal admin. This is required for any of the sub-modules below. Enter the relevant API credentials on the provided settings form in the backend. Beyond containing the settings form, this module provides helper functions as well.
 
-If needed, you can also enable the other plugins below to extend functionality.
+If needed, you can also enable the other submodules below to extend functionality.
 
 ## Wicket CAS Role Sync
 
-Requires WP-CASSIFY plugin *AND* the "Base Wicket Plugin"
+Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "Base Wicket Module"
 
 This will work on user login. Deletes existing user roles then re-adds based on what's set on the user in Wicket. If the roles don't exist in
-Wordpress, they will be created on the fly
+Drupal, they will be created on the fly then assigned to the user.
 
 ## Wicket Update Password
 
-Requires the "Base Wicket Plugin". Provides a widget with a form to update the persons password. This is a widget in Wordpress. It's suggested to install widget context plugin to be able to restrict which pages it can go on.
+Requires the "Base Wicket Module". Provides a Drupal block with a form to update the persons password.
 
 ## Wicket Contact Information
 
-Requires the "Base Wicket Plugin". Provides the React widget form from Wicket admin to update person contact information. This is a widget in Wordpress. It's suggested to install widget context plugin to be able to restrict which pages it can go on.
+Requires the "Base Wicket Module". Provides the React widget form from Wicket admin to update person contact information. This is a block in Drupal.
 
 ## Wicket Create Account Form
 
