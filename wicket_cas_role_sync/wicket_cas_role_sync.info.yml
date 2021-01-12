@@ -3,6 +3,7 @@ type: module
 description: wicket.io module that provides a custom event subscriber that listens for CAS CasPreLoginEvent thus allowing role syncing capability on fire of that CAS login event
 package: Wicket
 core: 8.x
+core_version_requirement: ^8 || ^9
 dependencies:
   - cas:cas
   - wicket:wicket

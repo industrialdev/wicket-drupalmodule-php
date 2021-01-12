@@ -1,5 +1,6 @@
 name: Wicket Contact Information
 description: wicket.io module that provides the contact information form from Wicket
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: Wicket
 type: module
