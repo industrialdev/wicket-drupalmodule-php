@@ -1,5 +1,5 @@
 {
-  "name": "industrialdev/wicket-drupal8module-php",
+  "name": "industrialdev/wicket-drupalmodule-php",
   "description": "Drupal 8 Module for Wicket",
   "type": "drupal-module",
   "repositories": [
