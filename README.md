@@ -106,6 +106,11 @@ Requires the "Base Wicket Module". Provides the React widget form from Wicket ad
 
 Requires the "Base Wicket Module". Provides a Drupal route (/create-account) with a form to create a new person. Also contains a settings page to configure some things related to this page at **/admin/config/wicket-create-account/settings**
 
+## Wicket CAS Name Sync
+
+Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "Base Wicket Module". Provides a custom event subscriber that listens for CAS CasPreLoginEvent thus allowing name syncing capability on fire of that CAS login event. It will store the $person->full_name from Wicket under the Drupal user account using the key "person_full_name" via the UserData Drupal service.
+
+
 
 ## CAS SETUP
 Within the CAS settings, /wp/wp-admin/options-general.php?page=wp-cassify.php
