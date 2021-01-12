@@ -5,7 +5,7 @@ https://github.com/industrialdev/wicket-sdk-php.git
 
 ## Installation
 
-### repositories method (USE THIS ONE)
+### repositories method
 
 Add to your main composer.json (merging with your existing repositories array if it exists):
 
@@ -13,7 +13,7 @@ Add to your main composer.json (merging with your existing repositories array if
 "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/industrialdev/wicket-drupal8module-php.git"
+      "url": "https://github.com/industrialdev/wicket-drupalmodule-php.git"
     },
     {
       "type": "git",
