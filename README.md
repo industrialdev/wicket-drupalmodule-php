@@ -111,5 +111,14 @@ Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "B
 
 
 
-## CAS SETUP
-Within the CAS settings, /wp/wp-admin/options-general.php?page=wp-cassify.php
+## CAS Links for theme
+```
+{% if logged_in %}
+  <li><a href="/{% if language.id != 'en' %}{{language.id}}/{% endif %}my-profile">{{'Account Center'|t}}</a></li>
+  <li><a href="/caslogout">{{'Log Out'|t}}</a></li>
+{% else %}
+  <li><a href="/{% if language.id != 'en' %}{{language.id}}/{% endif %}create-account">{{'Register'|t}}</a></li>
+  <li class="login"><a href="/{% if language.id != 'en' %}{{language.id}}/{% endif %}cas?returnto={% if language.id != 'en' %}{{language.id}}/{% endif %}account-center">{{'Login'|t}}</a></li>
+{% endif %}
+```
+
