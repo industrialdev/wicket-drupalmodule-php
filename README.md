@@ -48,7 +48,6 @@ Under log out behaviour, check "**Drupal logout triggers CAS logout**"
 
 
 ### Enable Wicket Drupal modules (the Drupal Wicket module depends on CAS being there):
----------------------------------------------
 You should at least enable these 2 to start:
 
 **drush en -y wicket**
