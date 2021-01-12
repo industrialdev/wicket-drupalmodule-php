@@ -22,7 +22,7 @@ Add to your main composer.json (merging with your existing repositories array if
 ]
 ```
 
-Then run `composer require industrialdev/wicket-drupal8module-php`
+Then run `composer require industrialdev/wicket-drupalmodule-php`
 
 
 
