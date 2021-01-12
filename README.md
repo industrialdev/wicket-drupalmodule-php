@@ -88,6 +88,12 @@ Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "B
 This will work on user login. Deletes existing user roles then re-adds based on what's set on the user in Wicket. If the roles don't exist in
 Drupal, they will be created on the fly then assigned to the user.
 
+## Wicket CAS Set Unique Identifier
+
+Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "Base Wicket Module"
+
+This attempts to solve the issue of users updating their email in Wicket and thus breaking that link in Drupal. Ultimately we want to use the Wicket PersonUuid as the CAS Username value (which seeks to update the account if it finds it upon login). The module by default only offers the option to assign the email value, not the CAS Username. So this module will on account creation as well as additional logins, update the email address to be what's in Wicket, set the CAS Username to be the Wicket Person's UUID and update the username to be the email as well (same as the email address field).
+
 ## Wicket Update Password
 
 Requires the "Base Wicket Module". Provides a Drupal block with a form to update the persons password.
@@ -98,19 +104,8 @@ Requires the "Base Wicket Module". Provides the React widget form from Wicket ad
 
 ## Wicket Create Account Form
 
-Requires the "Base Wicket Plugin". Provides a widget with a form to create a new person. This is a widget in Wordpress. It's suggested to install widget context plugin to be able to restrict which pages it can go on. 
+Requires the "Base Wicket Module". Provides a Drupal route (/create-account) with a form to create a new person. Also contains a settings page to configure some things related to this page at **/admin/config/wicket-create-account/settings**
 
-To create a modified version of this form, it is advisable to disable this plugin, copy the plugin file "wicket_create_account.php" outside of the wicket plugin folder, rename it and adjust the include path at the top of the file within your new copy to continue to pull in the settings form. It might be a good idea while renaming the file to also rename the functions and class within as well. This isn't stricly required but might be a good idea to visually separate the plugin as being custom/your own. 
-
-Also, if needing to run both the core form plugin and your custom one, the functions will need to be renamed as well.
-
-## Wicket Manage Preferences Form
-
-Requires the "Base Wicket Plugin". Provides a widget with a form to update person preferences. This is a widget in Wordpress. It's suggested to install wicket context plugin to be able to restrict which pages it can go on. 
-
-To create a modified version of this form, it is advisable to disable this plugin, copy the plugin file "wicket_manage_preferences.php" outside of the wicket plugin folder and rename it. It might be a good idea while renaming the file to also rename the functions and class within as well. This isn't stricly required but might be a good idea to visually separate the plugin as being custom/your own. 
-
-Also, if needing to run both the core form plugin and your custom one, the functions will need to be renamed as well.
 
 ## CAS SETUP
 Within the CAS settings, /wp/wp-admin/options-general.php?page=wp-cassify.php
