@@ -54,6 +54,8 @@ You should at least enable these 2 to start:
 
 **drush en -y wicket_cas_set_unique_identifier**
 
+**drush en -y wicket_cas_role_sync**
+
 
 
 
@@ -86,6 +88,8 @@ Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "B
 
 This will work on user login. Deletes existing user roles then re-adds based on what's set on the user in Wicket. If the roles don't exist in
 Drupal, they will be created on the fly then assigned to the user.
+
+This module also ignores the standard Wicket "administrator" role. So, you should setup a "Drupal Admin" role in Wicket, assign that to someone, then log in as them. Once the role is in Drupal, give it all the permissions so it will in effect be an admin user. This is because we don't want to just assume if you're an administrator in Wicket, you should be one in the CMS. Thus, a specific role is created and assigned to the person records for who should actually also be an admin in the CMS.
 
 ## Wicket CAS Set Unique Identifier
 
