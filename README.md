@@ -46,6 +46,8 @@ In the CAS settings (**/admin/config/people/cas**) configure these options:
 
 Under log out behaviour, check "**Drupal logout triggers CAS logout**"
 
+Under log out behaviour, set "Log out destination" to be ```"<front>"```
+
 
 ### Enable Wicket Drupal modules (the Drupal Wicket module depends on CAS being there):
 You should at least enable these 2 to start:
