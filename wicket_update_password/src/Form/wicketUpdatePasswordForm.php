@@ -6,6 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\wicket\Form\wicketSettingsForm;
 
+
 /**
  * Provide a wicket person update password form.
  */
@@ -119,8 +120,8 @@ class wicketUpdatePasswordForm extends ConfigFormBase {
     }
     // redirect here if there was updates made and prevent form re-submission
     if (empty($errors)) {
-      drupal_set_message(t('Password has been successfully updated'));
-      header('Location:'.\Drupal::url('<current>'));
+      \Drupal::messenger()->addMessage(t('Password has been successfully updated'), 'status');
+      header('Location:'.\Drupal\Core\Url::fromRoute('<current>')->toString());
       die;
     }
 
@@ -145,7 +146,7 @@ class wicketUpdatePasswordForm extends ConfigFormBase {
       $output .= "</ul>";
       // Prevent the link from being escaped by the render system.
       $rendered_message = \Drupal\Core\Render\Markup::create($output);
-      drupal_set_message(t('The password could not be updated. @errors',['@errors' => $rendered_message]), 'error');
+      \Drupal::messenger()->addMessage(t('The password could not be updated. @errors',['@errors' => $rendered_message]), 'error');
       $form_state->setRebuild();
     }
 
