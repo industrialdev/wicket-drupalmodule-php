@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\wicket\Form\wicketSettingsForm;
+use \Wicket\Client;
 
 /**
  * Loads the PHP SDK
