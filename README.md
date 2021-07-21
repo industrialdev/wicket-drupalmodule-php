@@ -1,34 +1,24 @@
 # Wicket Drupal module
 
-Uses the Industrial PHP Wicket SDK
-https://github.com/industrialdev/wicket-sdk-php.git
+Download (NOT CLONE) this repo in to the modules directory of a drupal website.
 
-## Installation
+Make sure the module folder is called "wicket-drupalmodule-php"
 
-### repositories method
+Add this to the root composer.json file:
 
-Add to your main composer.json (merging with your existing repositories array if it exists):
+under require:
+` "industrialdev/wicket-sdk-php": "dev-master",`
 
-```json
-"repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/industrialdev/wicket-drupalmodule-php.git"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/industrialdev/wicket-sdk-php.git"
-    }
-]
+under repositories, add this:
+```
+{
+  "type": "git",
+  "url": "https://github.com/industrialdev/wicket-sdk-php.git"
+}
 ```
 
-Then run `composer require industrialdev/wicket-drupalmodule-php`
+then run composer update to get the wicket sdk
 
-
-
-## Important Note
-
-This module is common to all installs of Drupal using Wicket. There is usually, for now, a lib/wicket.php within the theme with logic specific to each client, but any code changes to this module should be able to be made to all clients that use this module.
 
 ## Initial Setup
 
