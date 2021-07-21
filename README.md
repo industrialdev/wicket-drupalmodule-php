@@ -1,6 +1,6 @@
 # Wicket Drupal module
 
-Download (NOT CLONE) this repo in to the modules directory of a drupal website.
+Download (NOT CLONE) this repo in to the modules/custom directory of a drupal website.
 
 Make sure the module folder is called "wicket-drupalmodule-php"
 
@@ -103,7 +103,7 @@ Requires the "Base Wicket Module". Provides a Drupal route (/create-account) wit
 
 ## Wicket CAS Name Sync
 
-Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "Base Wicket Module". Provides a custom event subscriber that listens for CAS CasPreLoginEvent thus allowing name syncing capability on fire of that CAS login event. It will store the $person->full_name from Wicket under the Drupal user account using the key "person_full_name" via the UserData Drupal service.
+Requires the Drupal CAS module (https://www.drupal.org/project/cas) *AND* the "Base Wicket Module". Provides a event subscriber that listens for CAS CasPreLoginEvent thus allowing name syncing capability on fire of that CAS login event. It will store the $person->full_name from Wicket under the Drupal user account using the key "person_full_name" via the UserData Drupal service.
 
 
 
