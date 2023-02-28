@@ -150,3 +150,20 @@ function wicket_get_person_orders($person_uuid, $args = [], $client = null) {
 
   return wicket_build_collection($response, $client);
 }
+
+/**------------------------------------------------------------------
+ * Gets the current person memberships
+ * using the person membership entries endpoint
+ ------------------------------------------------------------------*/
+ function wicket_get_current_person_memberships(){
+	$client = wicket_api_client();
+	$uuid = wicket_current_person_uuid();
+  
+  try{
+    $memberships = $client->get('people/'.$uuid.'/membership_entries?include=membership,organization_membership.organization,fusebill_subscription');
+  }catch (Exception $e){
+  }
+	if ($memberships) {
+		return $memberships;
+	}
+}
